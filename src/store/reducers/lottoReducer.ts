@@ -3,11 +3,15 @@ import {ActionType} from '../types';
 type State = {
   lottories: Array<object> | [];
   loading: boolean;
+  singleWin: number;
+  entries: Array<number>;
 };
 
 const initialState: State = {
   lottories: [],
   loading: false,
+  singleWin: 0,
+  entries: [],
 };
 
 const lottoReducer = (state = initialState, {type, payload}: any) => {
