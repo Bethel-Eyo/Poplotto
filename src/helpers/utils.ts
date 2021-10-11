@@ -30,22 +30,32 @@ const calculateSum = (data: Array<number>) => {
 
 const areAllValuesSame = (data: Array<number>) => {
   let value = data[0];
+  let count = 0;
   data.forEach((entry: number) => {
     if (entry !== value) {
-      return false;
+      count++;
     }
   });
 
-  return true;
+  if (count === 0) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 const differFromFirst = (data: Array<number>) => {
   let first = data[0];
+  let count = 0;
   for (let i = 1; i < data.length; i++) {
     if (data[i] === first) {
-      return false;
+      count++;
     }
   }
 
-  return true;
+  if (count === 0) {
+    return true;
+  } else {
+    return false;
+  }
 };

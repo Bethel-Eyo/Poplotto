@@ -64,3 +64,8 @@ export const myTickets = [
     created: 1632465622379,
   },
 ];
+
+export const mockedDetail = {
+  id: 1,
+  numbers: [1, 1, 0],
+};

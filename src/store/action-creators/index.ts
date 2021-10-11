@@ -5,6 +5,7 @@ import {calculateSingleWin} from '../../helpers/utils';
 import {getDetailsAction, getLotteryAction} from '../actions';
 import {ActionType} from '../types';
 
+// get the list of lottery tickets
 export const getLotteryList = () => (dispatch: Dispatch<getLotteryAction>) => {
   axios
     .get('https://by82fsbdwk.execute-api.eu-west-1.amazonaws.com/prod/ticket')
@@ -21,6 +22,7 @@ export const getLotteryList = () => (dispatch: Dispatch<getLotteryAction>) => {
     });
 };
 
+// Get ticket details
 export const getTicketDetails =
   (id: number) => (dispatch: Dispatch<getDetailsAction>) => {
     axios
@@ -29,17 +31,27 @@ export const getTicketDetails =
       )
       .then(res => {
         console.log(res.data);
+        Alert.alert('successful');
         let data = res.data.numbers;
-        dispatch({
-          type: ActionType.SET_LOTTO_DETAILS,
-          payload: data,
-        });
-        dispatch({
-          type: ActionType.SET_SINGLE_SUM,
-          payload: calculateSingleWin(data),
-        });
+        console.log(data);
+        ship(dispatch, ActionType.SET_LOTTO_DETAILS, data);
+        let win = calculateSingleWin(data);
+        ship(dispatch, ActionType.SET_SINGLE_SUM, win);
       })
       .catch(error => {
         console.log(error);
+        ship(dispatch, ActionType.SET_DETAIL_ERROR, true);
       });
   };
+
+// abstract dispatch details
+const ship = (
+  dispatch: Dispatch<getDetailsAction>,
+  dispatchType: any,
+  data: any,
+) => {
+  dispatch({
+    type: dispatchType,
+    payload: data,
+  });
+};

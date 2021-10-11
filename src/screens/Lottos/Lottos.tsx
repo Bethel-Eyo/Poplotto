@@ -2,11 +2,12 @@ import React, {FC, useEffect} from 'react';
 import {TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
 import ListView from '../../components/ListView';
+import Loader from '../../components/Loader';
 import {background, primary} from '../../config/color';
 import {ScreenProps, Ticket} from '../../config/interfaces';
 import {LottosLogic} from './LottosLogic';
 
-const Lottos: FC<ScreenProps> = () => {
+const Lottos: FC<ScreenProps> = ({navigation}) => {
   const {getData, lottories} = LottosLogic();
 
   useEffect(() => {
@@ -24,15 +25,22 @@ const Lottos: FC<ScreenProps> = () => {
           column is coming soon
         </Text>
       </HomeHeader>
-      <LottoList<any>
-        testID="lotto-list"
-        data={lottories}
-        renderItem={({item}: {item: Ticket}) => (
-          <TouchableOpacity>
-            <ListView name={'ticket ' + item.id} dateCreated={item.created} />
-          </TouchableOpacity>
-        )}
-      />
+      {lottories.length === 0 ? (
+        <Loader />
+      ) : (
+        <LottoList<any>
+          testID="lotto-list"
+          data={lottories}
+          renderItem={({item}: {item: Ticket}) => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('LottoDetails', {item});
+              }}>
+              <ListView name={'ticket ' + item.id} dateCreated={item.created} />
+            </TouchableOpacity>
+          )}
+        />
+      )}
     </Container>
   );
 };

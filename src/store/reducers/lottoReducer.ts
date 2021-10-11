@@ -5,6 +5,7 @@ type State = {
   loading: boolean;
   singleWin: number;
   entries: Array<number>;
+  detailError: boolean;
 };
 
 const initialState: State = {
@@ -12,6 +13,7 @@ const initialState: State = {
   loading: false,
   singleWin: 0,
   entries: [],
+  detailError: false,
 };
 
 const lottoReducer = (state = initialState, {type, payload}: any) => {
@@ -20,6 +22,31 @@ const lottoReducer = (state = initialState, {type, payload}: any) => {
       return {
         ...state,
         lottories: payload,
+        loading: false,
+        detailError: false,
+      };
+    case ActionType.SET_LOTTO_DETAILS:
+      return {
+        ...state,
+        entries: payload,
+        loading: false,
+        detailError: false,
+      };
+    case ActionType.SET_LOADING:
+      return {
+        ...state,
+        loading: payload,
+      };
+    case ActionType.SET_DETAIL_ERROR:
+      return {
+        ...state,
+        detailError: payload,
+        loading: false,
+      };
+    case ActionType.SET_SINGLE_SUM:
+      return {
+        ...state,
+        singleWin: payload,
         loading: false,
       };
     default:

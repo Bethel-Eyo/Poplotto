@@ -6,6 +6,9 @@ export interface getLotteryAction {
 }
 
 export interface getDetailsAction {
-  type: ActionType.SET_LOTTO_DETAILS | ActionType.SET_SINGLE_SUM;
-  payload: Array<number> | number;
+  type:
+    | ActionType.SET_LOTTO_DETAILS
+    | ActionType.SET_SINGLE_SUM
+    | ActionType.SET_DETAIL_ERROR;
+  payload: Array<number> | number | boolean;
 }
