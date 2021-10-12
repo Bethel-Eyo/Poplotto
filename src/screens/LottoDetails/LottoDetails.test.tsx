@@ -53,7 +53,7 @@ describe('<LottoDetails />', () => {
     expect(container.getByTestId('container')).toBeTruthy();
   });
 
-  test('win should be exact', () => {
+  test('win for single entry should be exact', () => {
     let lottery = store.getState().lotto;
     expect(lottery.singleWin).toBe(10);
   });

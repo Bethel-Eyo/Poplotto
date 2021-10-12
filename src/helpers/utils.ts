@@ -1,3 +1,4 @@
+import {AsyncStorage} from 'react-native';
 /* LOTTERY RULES
 1. If sum == 2    €10
 2. if all values are the same   €5
@@ -17,6 +18,15 @@ export const calculateSingleWin = (data: Array<number>) => {
   }
 
   return win;
+};
+
+export const storeTotalWins = async (value: number) => {
+  try {
+    await AsyncStorage.setItem('total_wins', value.toString());
+  } catch (e) {
+    // saving error
+    console.log(e);
+  }
 };
 
 const calculateSum = (data: Array<number>) => {

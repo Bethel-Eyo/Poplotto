@@ -1,11 +1,14 @@
+import {Ticket} from '../../config/interfaces';
 import {ActionType} from '../types';
 
 type State = {
-  lottories: Array<object> | [];
+  lottories: Array<Ticket> | [];
   loading: boolean;
   singleWin: number;
   entries: Array<number>;
   detailError: boolean;
+  status: string;
+  totalWins: number;
 };
 
 const initialState: State = {
@@ -14,6 +17,8 @@ const initialState: State = {
   singleWin: 0,
   entries: [],
   detailError: false,
+  status: 'inactive',
+  totalWins: 0,
 };
 
 const lottoReducer = (state = initialState, {type, payload}: any) => {
@@ -24,6 +29,7 @@ const lottoReducer = (state = initialState, {type, payload}: any) => {
         lottories: payload,
         loading: false,
         detailError: false,
+        status: 'pending',
       };
     case ActionType.SET_LOTTO_DETAILS:
       return {
@@ -48,6 +54,18 @@ const lottoReducer = (state = initialState, {type, payload}: any) => {
         ...state,
         singleWin: payload,
         loading: false,
+      };
+    case ActionType.SET_TOTAL_WINS:
+      return {
+        ...state,
+        totalWins: payload,
+        loading: false,
+        status: 'fetched',
+      };
+    case ActionType.SET_SYNCED:
+      return {
+        ...state,
+        status: payload,
       };
     default:
       return state;

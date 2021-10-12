@@ -8,7 +8,8 @@ import {ScreenProps, Ticket} from '../../config/interfaces';
 import {LottosLogic} from './LottosLogic';
 
 const Lottos: FC<ScreenProps> = ({navigation}) => {
-  const {getData, lottories} = LottosLogic();
+  const {getData, lottories, status, calculateTotal, total, getTotal} =
+    LottosLogic();
 
   useEffect(() => {
     if (lottories.length === 0) {
@@ -16,14 +17,21 @@ const Lottos: FC<ScreenProps> = ({navigation}) => {
     }
   });
 
+  useEffect(() => {
+    if (status === 'pending') {
+      calculateTotal(lottories);
+    } else if (status === 'fetched') {
+      getTotal();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status]);
+
   return (
     <Container testID="root">
       <HomeHeader testID="Header">
         <Title>Poplotto</Title>
-        <Text>
-          View the list of our lotto tickets and see their wins, total wins
-          column is coming soon
-        </Text>
+        <Text>View the list of our lotto tickets and see their wins</Text>
+        <Total testID="total">Total wins: {total}</Total>
       </HomeHeader>
       {lottories.length === 0 ? (
         <Loader />
@@ -62,13 +70,14 @@ const Container = styled.SafeAreaView`
 `;
 
 const HomeHeader = styled.View`
-  height: 140px;
+  height: 150px;
   width: 90%;
   background: ${background.light};
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   margin-top: 5px;
   align-items: center;
+  border-bottom: 5px solid red;
 `;
 
 // Text Components
@@ -76,6 +85,13 @@ const Title = styled.Text`
   font-weight: bold;
   font-size: 30px;
   margin-top: 7%;
+  color: ${primary.text};
+`;
+
+const Total = styled.Text`
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 10px;
   color: ${primary.text};
 `;
 

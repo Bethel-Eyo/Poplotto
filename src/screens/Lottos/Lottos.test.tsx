@@ -42,4 +42,20 @@ describe('<Lottos />', () => {
     expect(flatlist).toBeTruthy();
     expect(flatlist.props.data).toEqual(mockedLottoState);
   });
+
+  test('Total text should render', () => {
+    expect(container.getByTestId('total')).toBeTruthy();
+  });
+
+  test('Total wins algorithm is accurate', () => {
+    let winsArr = [10, 0, 0, 10, 1, 10, 0, 1, 1, 1, 0, 0, 0, 0];
+    let sum = 0;
+    winsArr.forEach(win => {
+      sum = sum + win;
+    });
+
+    expect(sum).toBe(34);
+  });
 });
+
+// [10, 0, 0, 10, 1, 10, 0, 1, 1, 1, 0, 0, 0, 0] // 34
